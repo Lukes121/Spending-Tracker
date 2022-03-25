@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Spending_Tracker.Pages.QuickSpendPage"
+             Title="Expense">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="labelColor">White</Color>
+            <Style x:Key="VisualElementStyle" TargetType="VisualElement">
+                <Setter Property="BackgroundColor" Value="#003333"/>
+            </Style>
+            <Style TargetType="ContentPage"
+                   ApplyToDerivedTypes="True"
+                   BasedOn="{StaticResource VisualElementStyle}">
+            </Style>
+            
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#006600"/>
+                <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="TextColor" Value="#cccccc"/>
+            </Style>
+
+            <Style TargetType="ListView"
+                   BasedOn="{StaticResource VisualElementStyle}">
+                <Setter Property="SeparatorColor" Value="Black"/>
+            </Style>
+            
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource labelColor}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Padding="5,10">
+
+            <StackLayout>
+                <Label x:Name="lastMonthLabel"
+                       Text="Last 30 Days:"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="Center"
+                       />
+
+                <!--Top label, should show last 30 DAYS of expenditures-->
+                <Label x:Name="lastMonth" 
+                Text="" FontSize="20"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+
+            <!--Entrance for decimal value of Expenditure-->
+            <Entry x:Name="expenditureCost"
+                   Placeholder="Enter Expenditure"/>
+            
+            <!--Optional name for Expenditure-->
+            <Entry x:Name="expenditureName"
+                   Placeholder="Enter a Name"/>
+            <!--Main Event-->
+            <Button Text="Add" Style="{DynamicResource ButtonStyle}"
+                    Clicked="onAddExpenseClicked"/>
+
+            <Button Text="Refresh List" Style="{DynamicResource ButtonStyle}"
+                    Clicked="OnQuickRefreshClicked"/>
+
+            <!--List of previous expenses, targetting 7 days worth-->
+            <ListView x:Name="quickExpendituresList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="30">
+                            <StackLayout Padding="5" Orientation="Horizontal">
+                                <!--TODO Format Date-->
+                                <Label Text="{Binding expenditureValue}"/>
+                                <Label Text="{Binding expenditureName}"/>
+                                <Label Text="{Binding FormattedDate}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
